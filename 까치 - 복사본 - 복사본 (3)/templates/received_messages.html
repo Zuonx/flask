@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>받은 메시지들</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>받은 메시지들</h1>
+      </header>
+      <main>
+        <form action="{{ url_for('received_messages') }}" method="post" class="form-inline">
+          {{ search_form.hidden_tag() }}
+          {{ search_form.search(class="form-input-inline", placeholder="메시지 검색") }}
+          {{ search_form.submit(class="btn btn-primary") }}
+        </form>
+        <ul class="messages-list">
+          {% for message in messages %}
+            <li class="message-item">
+              {{ message.content }}
+              <form action="{{ url_for('delete_message', message_id=message.id) }}" method="post" style="display:inline;">
+                {{ search_form.csrf_token }}
+                <button type="submit" class="btn btn-danger">삭제</button>
+              </form>
+            </li>
+          {% endfor %}
+        </ul>
+        <div class="button-group">
+          <a href="{{ url_for('index') }}" class="btn btn-primary">돌아가기</a>
+        </div>
+      </main>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>익명 메시지</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <div id="loading">
+    <img src="{{ url_for('static', filename='loading.gif') }}" alt="Loading...">
+  </div>
+  <div class="container">
+    <h1>익명 메시지 보내기</h1>
+    {% if current_user.is_authenticated %}
+      <form action="{{ url_for('send') }}" method="post">
+        <input type="text" name="receiver" placeholder="수신자 아이디"><br>
+        <textarea name="message" rows="4" cols="50" placeholder="여기에 메시지를 입력하세요"></textarea><br>
+        <button type="submit">보내기</button>
+      </form>
+      <a href="{{ url_for('logout') }}" class="btn">로그아웃</a>
+      <a href="{{ url_for('messages') }}" class="btn">받은 메시지들</a>
+    {% else %}
+      <a href="{{ url_for('login') }}" class="btn">로그인</a> 또는 <a href="{{ url_for('register') }}" class="btn">회원가입</a>
+    {% endif %}
+  </div>
+  <script>
+    document.addEventListener("DOMContentLoaded", function() {
+      setTimeout(function() {
+        document.getElementById('loading').style.display = 'none';
+      }, 1000);
+    });
+  </script>
+</body>
+</html>
